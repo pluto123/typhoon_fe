@@ -1,14 +1,18 @@
 import "./App.css";
-import SimpleLineChart from "./components/SimpleLineChart";
-import Button from '@mui/material/Button';
+import { Routes, Route } from "react-router-dom";
 import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <div className="App">
-      {/* <Button variant="contained">Hello World</Button>
-      <SimpleLineChart /> */}
-      <SignIn />
+      <Routes>
+        <Route path='/' element={<SignIn />} />
+        <Route path='/SignIn' element={<SignIn />} />
+        <Route path='/SignUp' element={<SignUp />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

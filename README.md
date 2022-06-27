@@ -10,4 +10,5 @@ This project is react project.
 * @mui/material : 5.8.5
 * react : 17.0.2
 * react-dom : 17.0.2
-* recharts": 2.1.11
+* recharts : 2.1.11
+* react-router-dom : 6.3.0

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,8 +18,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit"  href='https://pluto123.github.io/' target="_blank">
+        Steven's Notebook
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -91,12 +92,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} to='/SignIn' variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} to='/SignUp' variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
