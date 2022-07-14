@@ -1,5 +1,6 @@
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { login } from "../../actions/auth";
 
 function Copyright(props) {
   return (
@@ -29,15 +31,38 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+export default function SignIn(props) {
+  const [username, setUsername] = useState("");
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
   };
+
+  const [password, setPassword] = useState("");
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    dispatch(login(username, password))
+      .then(() => {
+        props.history.push("/Dashboard");
+        window.location.reload();
+      })
+      .catch(() => {
+
+      });
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/Dashboard" />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,7 +82,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -67,6 +92,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={onChangeUsername}
             />
             <TextField
               margin="normal"
@@ -77,6 +103,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={onChangePassword}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
